@@ -2,13 +2,17 @@ import { useState } from "react";
 import List from "./List";
 
 function Add() {
-  const [ingredientsList, setNewIngredients] = useState<string[]>([]);
-  function handleClick(event: React.SubmitEvent<HTMLFormElement>) {
+  const [ingredientsList, setIngredients] = useState<string[]>([]);
+  function handleClick(event: React.SubmitEvent<HTMLFormElement>): void {
     event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    const newIngredients = formData.get("ingredients") as string;
-    if (newIngredients.trim()) {
-      setNewIngredients((prev) => [...prev, newIngredients]);
+    const form = event.currentTarget;
+    const formsIngredientsDataObject = new FormData(form);
+    const formsIngredientsData = formsIngredientsDataObject.get(
+      "ingredients",
+    ) as string;
+    if (formsIngredientsData.trim()) {
+      setIngredients((prev) => [...prev, formsIngredientsData]);
+      form.reset();
     }
   }
   return (
